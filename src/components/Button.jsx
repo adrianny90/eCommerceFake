@@ -1,38 +1,35 @@
 import { useState, useEffect } from "react";
-const Button = ({ product }) => {
+const Button = ({ product, shop, setShop }) => {
   const [count, setCount] = useState(0);
+  console.log("cart in button element", shop);
+
+  useEffect(() => {
+    const productInCart = shop.find((item) => item.id === product.id);
+
+    setCount(productInCart ? productInCart.quantity : 0);
+  }, [shop, product.id]);
 
   const updateCart = (newCount) => {
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]"); // Pobierz istniejący koszyk lub pustą tablicę
-    const existingProductIndex = cart.findIndex(
+    let updatedShop = [...shop];
+    const existingProductIndex = updatedShop.findIndex(
       (item) => item.id === product.id
     );
 
     if (newCount > 0) {
       if (existingProductIndex > -1) {
-        // Produkt już istnieje w koszyku, aktualizuj ilość
-        cart[existingProductIndex].quantity = newCount;
+        updatedShop[existingProductIndex].quantity = newCount;
       } else {
-        // Dodaj nowy produkt do koszyka
-        cart.push({ ...product, quantity: newCount });
+        updatedShop.push({ ...product, quantity: newCount });
       }
     } else {
-      // Usuń produkt z koszyka, jeśli count = 0
       if (existingProductIndex > -1) {
-        cart.splice(existingProductIndex, 1);
+        updatedShop.splice(existingProductIndex, 1);
       }
     }
 
-    // Zapisz zaktualizowany koszyk do localStorage
-    localStorage.setItem("cart", JSON.stringify(cart));
+    setShop(updatedShop);
+    localStorage.setItem("cart", JSON.stringify(updatedShop));
   };
-  useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const productInCart = cart.find((item) => item.id === product.id);
-    if (productInCart) {
-      setCount(productInCart.quantity);
-    }
-  }, [product.id]);
 
   const handleRemove = () => {
     setCount((prev) => {

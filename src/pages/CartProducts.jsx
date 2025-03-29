@@ -1,17 +1,18 @@
 import Button from "../components/Button";
 import { useState, useEffect } from "react";
+import { removeFromCart } from "../utils/helpers";
 
 const CartProducts = ({ shop, setShop }) => {
-  // Funkcja do usuwania produktu z koszyka
-  const removeFromCart = (productId) => {
-    const updatedShop = shop.filter((product) => product.id !== productId);
-    setShop(updatedShop);
-    localStorage.setItem("cart", JSON.stringify(updatedShop));
-  };
-  const totalPrice = shop.reduce(
-    (total, product, quantity) => total + product.price * product.quantity,
-    0
-  );
+  const [price, setPrice] = useState(0);
+  console.log("cartProducts", shop);
+
+  useEffect(() => {
+    const totalPrice = shop.reduce(
+      (total, product) => total + product.price * product.quantity,
+      0
+    );
+    setPrice(totalPrice);
+  }, [shop]);
 
   return (
     <div className="grid lg:grid-cols-1 gap-4 p-4 w-full max-w-7xl mx-auto">
@@ -43,15 +44,17 @@ const CartProducts = ({ shop, setShop }) => {
                     Unit price: {product.price} €
                   </p>
                   <div className="flex justify-center items-center space-x-2">
-                    <Button product={product} />
+                    <Button product={product} shop={shop} setShop={setShop} />
                     <button
-                      onClick={() => removeFromCart(product.id)}
+                      onClick={() =>
+                        removeFromCart({ shop, setShop }, product.id)
+                      }
                       className="btn btn-ghost"
                     >
                       Remove
                     </button>
                   </div>
-                  {/* Suma dla pojedynczego produktu (jeśli np. jest ilość) */}
+
                   <p className="text-lg text-white font-bold">
                     {product.price} €
                   </p>
@@ -59,9 +62,9 @@ const CartProducts = ({ shop, setShop }) => {
               </div>
             </div>
           ))}
-          {/* Suma całkowita */}
+
           <div className="text-center text-xl font-bold text-black mt-4">
-            Total Price: {totalPrice.toFixed(2)} €
+            Total Price: {price.toFixed(2)} €
           </div>
         </>
       )}

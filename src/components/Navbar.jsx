@@ -7,7 +7,7 @@ const Navbar = () => {
         <Link to="/" className="text-2xl font-bold">
           Home
         </Link>
-        <Link to="/cart" className="text-2xl font-bold">
+        <Link to="/cart" className="text-2xl font-bold" role="button">
           Cart
         </Link>
       </div>

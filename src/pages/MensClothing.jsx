@@ -1,9 +1,11 @@
 import Button from "../components/Button";
 import { useAllProducts } from "./AllProductsContext";
+import { useOutletContext } from "react-router";
 
 const MensClothing = () => {
   const context = useAllProducts();
   const { products } = context;
+  const { cart, setCart } = useOutletContext();
   const filteredProducts = products.filter(
     (item) => item.category === "men's clothing"
   );
@@ -27,7 +29,7 @@ const MensClothing = () => {
               ${product.price}
             </p>
             <div className="flex justify-center items-center ">
-              <Button product={product} />{" "}
+              <Button product={product} shop={cart} setShop={setCart} />{" "}
             </div>
           </div>
         ))}
