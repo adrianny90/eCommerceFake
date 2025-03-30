@@ -1,10 +1,12 @@
 import { Link, Outlet } from "react-router";
 import ProductDetails from "./ProductDetails";
 import { useAllProducts } from "./AllProductsContext";
+import { useOutletContext } from "react-router";
 
 const Home = () => {
   const context = useAllProducts();
   const { products, loading, error } = context;
+  const { cart, setCart } = useOutletContext();
 
   if (loading) {
     return (
@@ -58,7 +60,7 @@ const Home = () => {
         <h1 className="text-6xl my-6 font-bold mb-4 text-black text-center">
           Our Products
         </h1>{" "}
-        <ProductDetails />
+        <ProductDetails shop={cart} setShop={setCart} />
       </div>
       <Outlet />
     </div>

@@ -1,5 +1,5 @@
 import Button from "../components/Button";
-const Product = ({ products }) => {
+const Product = ({ products, shop, setShop }) => {
   return (
     <div className="p-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 w-full max-w-7xl mx-auto">
@@ -21,7 +21,7 @@ const Product = ({ products }) => {
               ${product.price}
             </p>
             <div className="flex justify-center items-center ">
-              <Button product={product} />{" "}
+              <Button product={product} shop={shop} setShop={setShop} />{" "}
             </div>
           </div>
         ))}
