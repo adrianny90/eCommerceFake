@@ -67,7 +67,7 @@ const Button = ({ product, shop, setShop }) => {
         >
           -
         </button>
-        <span className="content-center p-1 my-1 text-black font-semibold text-sm">
+        <span className="content-center p-1 my-1 text-red-400 font-semibold text-sm">
           {count}
         </span>
         <button
