@@ -25,7 +25,7 @@ const CartProducts = ({ shop, setShop }) => {
               key={product.id}
               className="flex items-center bg-blue-800 rounded-md p-4 shadow-xl hover:shadow-2xl hover:cursor-pointer"
             >
-              <div className="flex-shrink-0 w-24 h-24 rounded-full overflow-hidden mr-4">
+              <div className="flex-shrink-0 w-40 h-40 rounded-full overflow-hidden mr-4">
                 <img
                   src={product.image}
                   alt="Image missing"
